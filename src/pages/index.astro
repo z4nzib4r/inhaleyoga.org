@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Mandala from '../components/Mandala.astro';
@@ -51,10 +52,10 @@ const stats = [
           with less pain, less anxiety and better health.
         </p>
         <div class="btn-row reveal" style="--d:.15s">
-          <a class="btn" href="/contact">Book a free phone consult</a>
-          <a class="btn btn--line" href="/services">Services &amp; pricing</a>
+          <a class="btn" href={url('/contact')}>Book a free phone consult</a>
+          <a class="btn btn--line" href={url('/services')}>Services &amp; pricing</a>
         </div>
-        <a class="hero__byline reveal" style="--d:.2s" href="/about">
+        <a class="hero__byline reveal" style="--d:.2s" href={url('/about')}>
           <Image src={michelle} alt="" width={96} height={96} />
           <span><strong>Michelle Stobart, L.Ac.</strong><br />Board-certified, licensed acupuncturist</span>
         </a>
@@ -168,7 +169,7 @@ const stats = [
         {
           menu.map((m, i) => (
             <li class="reveal" style={`--d:${i * 0.04}s`}>
-              <a href={m.href}>
+              <a href={url(m.href)}>
                 <span class="menu__img">
                   <Image src={m.image} alt="" widths={[160, 240]} sizes="80px" />
                 </span>
@@ -184,7 +185,7 @@ const stats = [
         }
       </ul>
       <div class="menu-foot reveal">
-        <a class="more-link" href="/services">Full service list</a>
+        <a class="more-link" href={url('/services')}>Full service list</a>
       </div>
     </div>
   </section>
@@ -211,7 +212,7 @@ const stats = [
           <li>Tendonitis, strains &amp; overuse injuries</li>
           <li>Post-surgical &amp; post-injury rehab</li>
         </ul>
-        <a class="btn btn--light reveal" href="/sports-orthopedic-acupuncture">How it works</a>
+        <a class="btn btn--light reveal" href={url('/sports-orthopedic-acupuncture')}>How it works</a>
       </div>
     </div>
   </section>
@@ -238,7 +239,7 @@ const stats = [
           }
         </div>
       </div>
-      <a class="more-link reveal" href="/reviews">More reviews</a>
+      <a class="more-link reveal" href={url('/reviews')}>More reviews</a>
     </div>
   </section>
 
@@ -250,12 +251,12 @@ const stats = [
         <h2 class="t-1 reveal">Experienced hands, <em>curious minds</em></h2>
       </header>
       <div class="team__grid">
-        <a class="person reveal" href="/about">
+        <a class="person reveal" href={url('/about')}>
           <div class="arch"><Image src={michelle} alt="Michelle Stobart, L.Ac." widths={[360, 600]} sizes="(min-width: 760px) 30vw, 80vw" /></div>
           <h3 class="t-3">Michelle Stobart, <em>L.Ac.</em></h3>
           <p>Licensed acupuncturist and certified yoga therapist with over 20 years of teaching and healing in Athens.</p>
         </a>
-        <a class="person reveal" style="--d:.1s" href="/about">
+        <a class="person reveal" style="--d:.1s" href={url('/about')}>
           <div class="arch"><Image src={angela} alt="Angela Jett" widths={[360, 600]} sizes="(min-width: 760px) 30vw, 80vw" /></div>
           <h3 class="t-3">Angela <em>Jett</em></h3>
           <p>Certified reflexologist and wellness coach, blending reflexology with Traditional Chinese Medicine.</p>

@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import Lotus from './Lotus.astro';
@@ -42,7 +43,7 @@ const year = new Date().getFullYear();
         </ul>
         <h2 class="footer__title">Explore</h2>
         <ul class="footer__list footer__list--2">
-          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          {nav.map((n) => <li><a href={url(n.href)}>{n.label}</a></li>)}
         </ul>
       </div>
 

@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import mandala from '../assets/images/mandala.png';
 
@@ -9,7 +10,7 @@ interface Props {
 const { variant = 'dark', class: className } = Astro.props;
 ---
 
-<a href="/" class:list={['logo', `logo--${variant}`, className]} aria-label="Inhale Wellness Studio, home">
+<a href={url('/')} class:list={['logo', `logo--${variant}`, className]} aria-label="Inhale Wellness Studio, home">
   <span class="logo__mark">
     <Image src={mandala} alt="" width={104} height={96} loading="eager" />
   </span>

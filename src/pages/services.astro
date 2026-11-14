@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
@@ -71,7 +72,7 @@ const steps = [
                 <p class="item__desc">{s.summary}</p>
                 <div class="item__foot">
                   <span class="item__dur">{s.duration}</span>
-                  <a class="item__link" href={`/contact?service=${encodeURIComponent(s.name)}#form`}>
+                  <a class="item__link" href={url(`/contact?service=${encodeURIComponent(s.name)}#form`)}>
                     Request <span class="sr-only">{s.name}</span> →
                   </a>
                 </div>

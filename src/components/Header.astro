@@ -1,9 +1,10 @@
 ---
+import { url, unbase } from '../lib/url';
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import { nav, site } from '../data/site';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = unbase(Astro.url.pathname).replace(/\/$/, '') || '/';
 const isActive = (href: string) => path === href || path.startsWith(href + '/');
 ---
 
@@ -16,7 +17,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
         {
           nav.map((item) => (
             <li>
-              <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              <a href={url(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>
@@ -30,7 +31,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
         <span class="header__phone-label">By appointment</span>
         <span class="header__phone-num">{site.phone}</span>
       </a>
-      <a class="btn header__btn" href="/contact">Book a consult</a>
+      <a class="btn header__btn" href={url('/contact')}>Book a consult</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-open>
         <span class="menu-btn__lines" aria-hidden="true"></span>
         <span class="sr-only">Open menu</span>
@@ -51,7 +52,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
     {
       [{ href: '/', label: 'Home' }, ...nav].map((item, i) => (
         <a
-          href={item.href}
+          href={url(item.href)}
           style={`--i:${i}`}
           aria-current={(item.href === '/' ? path === '/' : isActive(item.href)) ? 'page' : undefined}
         >

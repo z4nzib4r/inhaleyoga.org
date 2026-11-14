@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Mandala from './Mandala.astro';
 import Icon from './Icon.astro';
 import { site } from '../data/site';
@@ -27,7 +28,7 @@ const {
       <p class="lead">{body}</p>
       <div class="btn-row">
         <a class="btn" href={site.phoneHref}><Icon name="phone" size={16} /> {site.phone}</a>
-        <a class="btn btn--line" href="/contact">Send a message</a>
+        <a class="btn btn--line" href={url('/contact')}>Send a message</a>
       </div>
       <p class="cta__note">New patients: it often takes 4–6 weeks to get onto the calendar, so reach out early.</p>
     </div>
