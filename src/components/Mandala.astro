@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import mandala from '../assets/images/mandala.png';
+
+interface Props {
+  /** rendered width in px (max) */
+  size?: number;
+  breathe?: boolean;
+  class?: string;
+  eager?: boolean;
+}
+const { size = 520, breathe = true, class: className, eager = false } = Astro.props;
+---
+
+<div class:list={['mandala', { 'mandala--breathe': breathe }, className]} style={`--size:${size}px`} aria-hidden="true">
+  <span class="mandala__halo"></span>
+  <span class="mandala__spin">
+    <Image src={mandala} alt="" widths={[260, 520, 782]} sizes={`${size}px`} loading={eager ? 'eager' : 'lazy'} />
+  </span>
+</div>
+
+<style>
+  .mandala {
+    position: relative;
+    width: min(var(--size), 100%);
+    aspect-ratio: 1;
+    pointer-events: none;
+  }
+  .mandala__halo {
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--peach-1) 0%, transparent 70%);
+  }
+  .mandala__spin {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    animation: turn 180s linear infinite;
+  }
+  .mandala img {
+    width: 100%;
+    height: auto;
+  }
+  .mandala--breathe .mandala__halo,
+  .mandala--breathe img {
+    animation: breathe 11s ease-in-out infinite;
+  }
+</style>

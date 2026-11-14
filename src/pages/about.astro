@@ -1,0 +1,255 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import michelle from '../assets/team/michelle.jpg';
+import angela from '../assets/team/angela.jpg';
+
+const timeline = [
+  { year: '1997', text: 'Finds yoga, and a lifelong curiosity about the body deepens.' },
+  { year: '2003', text: '200-hour yoga training with Clayton Horton at Greenpath Yoga, San Francisco.' },
+  { year: '2004', text: 'Opens Inhale as a yoga studio in Athens, Ohio.' },
+  { year: '2017', text: '500-hour certification (Samyoga Institute) and recognition as a Yoga Therapist by IAYT.' },
+  { year: '2021', text: "Graduates with honors: Master's in Acupuncture, American Institute of Alternative Medicine." },
+  { year: '2022', text: 'Licensed acupuncturist with the Ohio State Medical Board.' },
+];
+---
+
+<Base
+  title="Meet our Team"
+  description="Meet Michelle Stobart, L.Ac., licensed acupuncturist and certified yoga therapist, and Angela Jett, certified reflexologist and wellness coach, at Inhale Wellness Studio in Athens, Ohio."
+>
+  <PageHero label="Meet our team" title="Rooted in" accent="growth & change.">
+    <p>
+      Two practitioners with a shared fascination for the human body, and a belief that healing happens when you
+      feel safe, heard and seen.
+    </p>
+  </PageHero>
+
+  <!-- Michelle -->
+  <section class="section bg-2">
+    <div class="wrap person">
+      <div class="person__media reveal">
+        <div class="arch"><Image src={michelle} alt="Michelle Stobart, L.Ac." widths={[400, 700, 1000]} sizes="(min-width: 900px) 34vw, 90vw" /></div>
+        <p class="person__contact">
+          <a href={site.phoneHref}><Icon name="phone" size={16} /> {site.phone}</a>
+          <a href={`mailto:${site.email}`}><Icon name="mail" size={16} /> {site.email}</a>
+        </p>
+      </div>
+      <div class="person__body">
+        <span class="label reveal">Licensed Acupuncturist · Certified Yoga Therapist</span>
+        <h2 class="t-1 reveal">Michelle Stobart, <em>L.Ac.</em></h2>
+        <p class="lead reveal">
+          My story is one of growth and change. At its center has been an unwavering dedication to offering health and
+          wellness treatments through a therapeutic-minded approach.
+        </p>
+        <p class="reveal">
+          I bring endless hours of continuing education and experience to guide clients into health and wellness with
+          an extensive toolkit of breathwork, body mechanics, mindfulness and holistic wellness.
+        </p>
+
+        <ul class="chips reveal" aria-label="Specialties">
+          {['Acupuncture', 'Electro Acupuncture', 'Cupping Therapy', 'Moxibustion', 'Thai Massage', 'Essential Oils', 'Movement Mechanics', 'Pain Management'].map((s) => <li>{s}</li>)}
+        </ul>
+
+        <ol class="timeline reveal">
+          {
+            timeline.map((t) => (
+              <li>
+                <span class="timeline__year">{t.year}</span>
+                <span>{t.text}</span>
+              </li>
+            ))
+          }
+        </ol>
+
+        <details class="story reveal">
+          <summary>Read Michelle's story</summary>
+          <div class="story__body">
+            <p>
+              My story began at a young age with a deep curiosity of the natural world and human body. It further
+              deepened in science, biology and psychology classes. As I grew, I learned more about who I wanted to become
+              by weeding out what I didn't. In 1997, I found yoga and it began to expand that curiosity in new ways, and
+              ever since, I haven't been able to get enough education, information or wisdom.
+            </p>
+            <p>
+              In 2003, while resting at the end of a yoga practice, an inner wisdom whispered <em>it's time</em>, and off
+              to teacher training I went. In 2004, I opened Inhale as a yoga studio, and for years taught daily classes,
+              trained teachers, ran workshops, presented at conferences and continued to grow.
+            </p>
+            <p>
+              In 2018, during a period of inspiration, it became clear that acupuncture was the next step along my
+              journey. I began studying Traditional Chinese Medicine in 2019. I had no idea the learning I was in for in
+              that 2.5-year program, and I graduated with honors in December 2021.
+            </p>
+            <p>
+              My path has grown so much over my career as a teacher and healer. I've always been guided by the needs of my
+              clients and an inner wisdom that knows just when to push me into a better version of myself to serve my
+              community. And here I am, ready to Inhale into its next level.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Angela -->
+  <section class="section">
+    <div class="wrap person person--flip">
+      <div class="person__media reveal">
+        <div class="arch"><Image src={angela} alt="Angela Jett" widths={[400, 615]} sizes="(min-width: 900px) 34vw, 90vw" /></div>
+        <p class="person__contact">
+          <a href="tel:+16143219089"><Icon name="phone" size={16} /> 614.321.9089</a>
+          <a href="mailto:info@yourlivingremedy.com"><Icon name="mail" size={16} /> info@yourlivingremedy.com</a>
+        </p>
+      </div>
+      <div class="person__body">
+        <span class="label reveal">Certified Reflexologist · Certified Wellness Coach</span>
+        <h2 class="t-1 reveal">Angela <em>Jett</em></h2>
+        <p class="lead reveal">
+          Angela helps people restore balance and build resilience in a busy, overstimulating world by combining
+          reflexology with Traditional Chinese Medicine.
+        </p>
+        <p class="reveal">
+          As a wellness coach, she provides lifestyle guidance that makes goals feel obtainable, no matter how big or
+          small. Life has taught her to be kind and empathetic, because everyone deserves to be heard and seen. She
+          believes healing occurs when an optimal and safe environment is provided, and her job is to help you create
+          that environment so your body can do what it was made to do.
+        </p>
+
+        <ul class="chips reveal" aria-label="Specialties">
+          {['Reflexology', 'Cupping Therapy', 'Wellness Coaching', 'Coming 2027: Acupuncture'].map((s) => <li>{s}</li>)}
+        </ul>
+
+        <details class="story reveal">
+          <summary>Read more about Angela</summary>
+          <div class="story__body">
+            <p>
+              Angela holds a Bachelor of Science with a focus on herbal studies from the American College of Healthcare
+              Sciences and is in the final year of a Master of Science program at the American Institute of Alternative
+              Medicine, pursuing her degree in acupuncture.
+            </p>
+            <p>
+              With a lifelong love of nature and natural healing, Angela feels fortunate to return to the land her
+              ancestors once walked in the Appalachian foothills. When she's not in the clinic, you can find her
+              frolicking on the hillside, planting, playing or doing Tai Chi.
+            </p>
+            <p>
+              Reflexology sessions focus on relaxation, stress relief and nervous-system support through intentional work
+              with the feet and hands. Wellness coaching offers gentle guidance around habits, self-care and personal
+              health goals, with an emphasis on balance rather than perfection.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .person {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .person {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 6rem;
+    }
+    .person--flip {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+    .person--flip .person__media {
+      order: 2;
+    }
+    .person__media {
+      position: sticky;
+      top: calc(var(--header-h) + 2.5rem);
+    }
+  }
+  .person__media .arch {
+    aspect-ratio: 4 / 5;
+    width: min(100%, 440px);
+  }
+  .person__contact {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+  .person__contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.75rem 0 2.25rem;
+    padding: 0;
+    list-style: none;
+  }
+  .chips li {
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: var(--peach-1);
+    font-size: 0.88rem;
+    color: var(--rose-ink);
+  }
+  .bg-2 .chips li {
+    background: var(--paper);
+  }
+  .timeline {
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-2);
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 0.75rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .timeline__year {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    color: var(--rose);
+  }
+  .story summary {
+    display: inline-flex;
+    gap: 0.6rem;
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid currentColor;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    list-style: none;
+  }
+  .story summary::-webkit-details-marker {
+    display: none;
+  }
+  .story summary::after {
+    content: '+';
+  }
+  .story[open] summary::after {
+    content: '−';
+  }
+  .story__body {
+    padding-top: 1.5rem;
+    color: var(--ink-2);
+  }
+</style>

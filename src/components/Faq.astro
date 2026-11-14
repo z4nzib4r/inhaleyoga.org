@@ -1,0 +1,96 @@
+---
+import { faqs } from '../data/content';
+---
+
+<div class="faq">
+  {
+    faqs.map((f, i) => (
+      <details class="faq__item" name="faq" open={i === 0}>
+        <summary>
+          <span class="faq__n">{String(i + 1).padStart(2, '0')}</span>
+          <span class="faq__q">{f.q}</span>
+          <span class="faq__icon" aria-hidden="true" />
+        </summary>
+        <p class="faq__a">{f.a}</p>
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .faq {
+    border-top: 1px solid var(--line-2);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--line-2);
+  }
+  summary {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 1.4rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq__n {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--salmon);
+  }
+  .faq__q {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    font-weight: 360;
+    font-variation-settings: 'SOFT' 100;
+    line-height: 1.25;
+    transition: color 0.25s;
+  }
+  summary:hover .faq__q,
+  [open] .faq__q {
+    color: var(--rose);
+  }
+  .faq__icon {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--line-2);
+    transition: background 0.3s, border-color 0.3s;
+  }
+  [open] .faq__icon {
+    background: var(--peach-2);
+    border-color: var(--peach-2);
+  }
+  .faq__icon::before,
+  .faq__icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 1.5px;
+    background: var(--ink);
+    translate: -50% -50%;
+    transition: rotate 0.35s var(--ease);
+  }
+  .faq__icon::after {
+    rotate: 90deg;
+  }
+  [open] .faq__icon::after {
+    rotate: 0deg;
+  }
+  .faq__a {
+    margin: 0;
+    padding: 0 3.5rem 1.6rem 2.75rem;
+    color: var(--ink-2);
+  }
+  @media (max-width: 600px) {
+    .faq__a {
+      padding-right: 0;
+    }
+  }
+</style>

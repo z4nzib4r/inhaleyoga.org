@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import mandala from '../assets/images/mandala.png';
+
+interface Props {
+  variant?: 'dark' | 'light';
+  class?: string;
+}
+const { variant = 'dark', class: className } = Astro.props;
+---
+
+<a href="/" class:list={['logo', `logo--${variant}`, className]} aria-label="Inhale Wellness Studio, home">
+  <span class="logo__mark">
+    <Image src={mandala} alt="" width={104} height={96} loading="eager" />
+  </span>
+  <span class="logo__type">
+    <span class="logo__word">Inhale</span>
+    <span class="logo__sub">wellness studio</span>
+  </span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .logo:hover {
+    color: var(--ink);
+  }
+  .logo__mark {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--white);
+    box-shadow: 0 0 0 1px var(--line);
+    overflow: hidden;
+    flex: none;
+    transition: rotate 1.2s var(--ease);
+  }
+  .logo:hover .logo__mark {
+    rotate: 60deg;
+  }
+  .logo__mark img {
+    width: 94%;
+  }
+  .logo__type {
+    display: grid;
+    line-height: 1;
+  }
+  .logo__word {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+    text-transform: uppercase;
+    color: #5d5853;
+  }
+  .logo__sub {
+    margin-top: 0.2rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 350;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    color: var(--rose);
+  }
+  .logo--light .logo__word {
+    color: var(--paper);
+  }
+  .logo--light .logo__sub {
+    color: var(--peach-2);
+  }
+  .logo--light .logo__mark {
+    box-shadow: none;
+  }
+</style>

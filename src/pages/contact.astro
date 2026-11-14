@@ -1,0 +1,288 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import { allServiceNames } from '../data/content';
+---
+
+<Base
+  title="Contact"
+  description="Book a free phone consultation or ask a question about acupuncture, cupping, reflexology or wellness coaching at Inhale Wellness Studio, Athens, Ohio."
+>
+  <PageHero label="Get in touch" title="We're here" accent="for you.">
+    <p>
+      Need more information, want to book, or have a question or suggestion? Reach us by phone, text, email or the
+      form below.
+    </p>
+  </PageHero>
+
+  <section class="section contact">
+    <div class="wrap contact__grid">
+      <aside class="contact__info reveal">
+        <div class="info-card">
+          <h2 class="info-card__title">Michelle Stobart, L.Ac.</h2>
+          <p class="info-card__role">Acupuncture · Cupping · Thai Massage</p>
+          <a href={site.phoneHref}><Icon name="phone" size={18} /> {site.phone}</a>
+          <a href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a>
+        </div>
+
+        <div class="info-card">
+          <h2 class="info-card__title">Angela Jett</h2>
+          <p class="info-card__role">Reflexology · Wellness Coaching</p>
+          <a href="tel:+16143219089"><Icon name="phone" size={18} /> 614.321.9089</a>
+          <a href="mailto:info@yourlivingremedy.com"><Icon name="mail" size={18} /> info@yourlivingremedy.com</a>
+        </div>
+
+        <div class="info-card info-card--soft">
+          <h2 class="info-card__title">Visit</h2>
+          <a href={site.location.mapsUrl} target="_blank" rel="noopener">
+            <Icon name="pin" size={18} />
+            <span>
+              {site.location.line1}<br />
+              {site.location.city}
+            </span>
+          </a>
+          <p class="muted">{site.location.note}.</p>
+          <p class="muted">
+            <strong>Mailing:</strong>{' '}
+            {site.mailing.line1}, {site.mailing.city}
+          </p>
+        </div>
+
+        <p class="small">
+          We do our best to respond within 24 hours, but please give us some grace. We both have busy schedules and
+          might need a breather. We'll be in touch ASAP.
+        </p>
+      </aside>
+
+      <form
+        id="form"
+        class="form reveal"
+        method="post"
+        action={site.formEndpoint || undefined}
+        data-endpoint={site.formEndpoint}
+        data-email={site.email}
+      >
+        <h2 class="t-2">Send a <em>message</em></h2>
+
+        <div class="form__row">
+          <label>
+            <span>Name</span>
+            <input name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Phone</span>
+            <input name="phone" type="tel" autocomplete="tel" />
+          </label>
+        </div>
+
+        <label>
+          <span>Email</span>
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+
+        <label>
+          <span>I'm interested in</span>
+          <select name="service" data-service>
+            <option value="Free phone consultation">Free phone consultation</option>
+            {allServiceNames.map((n) => <option value={n}>{n}</option>)}
+            <option value="Something else">Something else</option>
+          </select>
+        </label>
+
+        <label>
+          <span>How can we help?</span>
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <button class="btn" type="submit">Send message</button>
+        <p class="form__status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="map">
+    <iframe
+      title="Map to Inhale Wellness Studio"
+      src="https://www.google.com/maps?q=94+Columbus+Road,+Athens,+OH+45701&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#form');
+  const status = form?.querySelector<HTMLElement>('[data-status]');
+  const select = form?.querySelector<HTMLSelectElement>('[data-service]');
+
+  // Pre-select a service passed from the Services page (?service=…)
+  const wanted = new URLSearchParams(location.search).get('service');
+  if (select && wanted && [...select.options].some((o) => o.value === wanted)) select.value = wanted;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const endpoint = form.dataset.endpoint;
+
+    if (!endpoint) {
+      // No form backend configured: hand off to the visitor's email app.
+      const body = [
+        `Name: ${data.get('name')}`,
+        `Phone: ${data.get('phone') || 'not given'}`,
+        `Email: ${data.get('email')}`,
+        `Interested in: ${data.get('service')}`,
+        '',
+        String(data.get('message')),
+      ].join('\n');
+      const subject = `Website inquiry: ${data.get('service')}`;
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      if (status) status.textContent = 'Opening your email app…';
+      return;
+    }
+
+    if (status) status.textContent = 'Sending…';
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      if (status) status.textContent = "Thank you! We'll be in touch soon.";
+    } catch {
+      if (status) status.textContent = `Something went wrong. Please call or email ${form.dataset.email}.`;
+    }
+  });
+</script>
+
+<style>
+  .contact {
+    padding-top: clamp(2rem, 5vw, 3rem);
+  }
+  .contact__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .contact__grid {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 4rem;
+    }
+  }
+  .contact__info {
+    display: grid;
+    gap: 1rem;
+  }
+  .info-card {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.6rem 1.75rem;
+    border-radius: var(--r);
+    background: var(--white);
+    border: 1px solid var(--line);
+  }
+  .info-card--soft {
+    background: var(--peach-1);
+    border-color: transparent;
+  }
+  .info-card__title {
+    margin: 0;
+    font-size: 1.45rem;
+  }
+  .info-card__role {
+    margin: 0 0 0.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+  .info-card a {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .info-card a :global(svg) {
+    flex: none;
+    margin-top: 0.3em;
+  }
+  .info-card p {
+    margin: 0;
+  }
+  .muted {
+    color: var(--ink-2);
+  }
+  .small {
+    font-size: 0.92rem;
+    color: var(--stone);
+  }
+
+  .form {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--r-lg);
+    background: var(--paper-2);
+  }
+  .form__row {
+    display: grid;
+    gap: 1.1rem;
+  }
+  @media (min-width: 600px) {
+    .form__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  label {
+    display: grid;
+    gap: 0.4rem;
+  }
+  label span {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--white);
+    color: var(--ink);
+    font: inherit;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgb(179 116 123 / 0.18);
+  }
+  .form .btn {
+    justify-self: start;
+  }
+  .form__status {
+    margin: 0;
+    min-height: 1.5em;
+    color: var(--teal);
+  }
+
+  .map iframe {
+    display: block;
+    width: 100%;
+    height: clamp(320px, 45vw, 460px);
+    border: 0;
+    filter: grayscale(0.4) sepia(0.15);
+  }
+</style>

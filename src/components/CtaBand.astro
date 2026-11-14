@@ -1,0 +1,105 @@
+---
+import Mandala from './Mandala.astro';
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  accent?: string;
+  body?: string;
+}
+const {
+  title = 'Take a breath.',
+  accent = 'Then give us a call.',
+  body = "Whether you're sidelined by an injury, managing chronic pain or working through recovery, it starts with a free 15–20 minute phone consultation.",
+} = Astro.props;
+---
+
+<section class="cta">
+  <div class="wrap cta__grid">
+    <div class="cta__art reveal">
+      <Mandala size={440} />
+      <p class="cta__breath" aria-hidden="true"><span>inhale</span><span>exhale</span></p>
+    </div>
+    <div class="cta__body reveal" style="--d:.1s">
+      <span class="label">Free phone consultation</span>
+      <h2 class="t-1">{title} <em>{accent}</em></h2>
+      <p class="lead">{body}</p>
+      <div class="btn-row">
+        <a class="btn" href={site.phoneHref}><Icon name="phone" size={16} /> {site.phone}</a>
+        <a class="btn btn--line" href="/contact">Send a message</a>
+      </div>
+      <p class="cta__note">New patients: it often takes 4–6 weeks to get onto the calendar, so reach out early.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--section);
+    background: linear-gradient(180deg, var(--paper) 0%, var(--peach-1) 100%);
+    overflow: hidden;
+  }
+  .cta__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .cta__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 5rem;
+    }
+  }
+  .cta__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .cta__art :global(.mandala) {
+    width: min(440px, 80vw);
+  }
+  .cta__breath {
+    position: absolute;
+    bottom: -0.5rem;
+    margin: 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--rose);
+    height: 1.6em;
+    width: 8ch;
+    text-align: center;
+  }
+  .cta__breath span {
+    position: absolute;
+    inset: 0;
+    animation: breath-word 11s ease-in-out infinite;
+  }
+  .cta__breath span + span {
+    animation-delay: -5.5s;
+  }
+  @keyframes breath-word {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    40% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cta__breath {
+      display: none;
+    }
+  }
+  .cta__note {
+    margin: 1.75rem 0 0;
+    font-size: 0.9rem;
+    color: var(--stone);
+  }
+</style>

@@ -1,0 +1,129 @@
+---
+import { Image } from 'astro:assets';
+import Mandala from './Mandala.astro';
+
+interface Props {
+  label?: string;
+  title: string;
+  accent?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  position?: string;
+}
+const { label, title, accent, image, imageAlt = '', position = 'center' } = Astro.props;
+---
+
+<section class:list={['ph', image ? 'ph--image' : 'ph--plain']}>
+  <Mandala class="ph__mandala" size={640} eager />
+  <div class="wrap ph__grid">
+    <div class="ph__text">
+      {label && <span class="label">{label}</span>}
+      <h1 class="t-1">
+        {title}
+        {accent && <em> {accent}</em>}
+      </h1>
+      <div class="ph__slot"><slot /></div>
+    </div>
+    {
+      image && (
+        <div class="ph__img arch">
+          <Image
+            src={image}
+            alt={imageAlt}
+            widths={[400, 700, 1000]}
+            sizes="(min-width: 900px) 34vw, 80vw"
+            loading="eager"
+            fetchpriority="high"
+            style={`object-position:${position}`}
+          />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .ph {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding-block: clamp(3.5rem, 8vw, 6.5rem) clamp(3.5rem, 7vw, 5.5rem);
+  }
+  .ph :global(.ph__mandala) {
+    position: absolute;
+    z-index: -1;
+    opacity: 0.32;
+  }
+  .ph--plain :global(.ph__mandala) {
+    left: 50%;
+    top: 50%;
+    width: 620px;
+    translate: -50% -50%;
+    opacity: 0.11;
+  }
+  .ph--image :global(.ph__mandala) {
+    right: -140px;
+    top: -140px;
+    width: 560px;
+  }
+  @media (max-width: 899px) {
+    .ph--image :global(.ph__mandala) {
+      right: auto;
+      left: 50%;
+      top: auto;
+      bottom: -40px;
+      width: 520px;
+      translate: -50% 0;
+      opacity: 0.22;
+    }
+  }
+  .ph--plain {
+    text-align: center;
+    padding-block: clamp(4.5rem, 10vw, 8rem);
+  }
+  .ph--plain .label::after {
+    content: '';
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .ph--plain h1 {
+    max-width: 16ch;
+    margin-inline: auto;
+  }
+  .ph__grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .ph--image .ph__grid {
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 5rem;
+    }
+  }
+  h1 em {
+    display: block;
+  }
+  .ph__slot :global(p) {
+    max-width: 52ch;
+    margin-top: 1.5rem;
+    font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+    color: var(--ink-2);
+  }
+  .ph--plain .ph__slot :global(p) {
+    margin-inline: auto;
+  }
+  .ph__img {
+    width: min(100%, 420px);
+    aspect-ratio: 4 / 5;
+    justify-self: center;
+    box-shadow: 0 30px 60px -40px rgb(44 41 39 / 0.45);
+  }
+  @media (max-width: 899px) {
+    .ph__img {
+      width: min(78%, 360px);
+    }
+  }
+</style>

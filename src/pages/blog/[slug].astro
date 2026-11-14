@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Lotus from '../../components/Lotus.astro';
+import michelle from '../../assets/team/michelle.jpg';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = post.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const minutes = Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));
+---
+
+<Base title={post.data.title} description={post.data.description} image={post.data.cover}>
+  <article>
+    <header class="wrap-sm head">
+      <a class="back" href="/blog">← Journal</a>
+      <p class="meta">{post.data.category} · {date} · {minutes} min read</p>
+      <h1 class="t-1">{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+    </header>
+
+    <div class="wrap cover">
+      <Image src={post.data.cover} alt={post.data.coverAlt} widths={[640, 1000, 1400]} sizes="(min-width: 1240px) 1100px, 100vw" loading="eager" />
+    </div>
+
+    <div class="wrap-sm prose">
+      <Content />
+    </div>
+
+    <div class="wrap-sm end"><Lotus size={28} /></div>
+
+    <footer class="wrap-sm author">
+      <Image src={michelle} alt="" width={144} height={144} />
+      <p>
+        <strong>{post.data.author}</strong> is a licensed acupuncturist and certified yoga therapist in Athens, Ohio. Her
+        clinical focus includes electro-acupuncture, orthopedic and sports acupuncture, motor-point technique, cupping and
+        pain management.
+      </p>
+    </footer>
+  </article>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .head {
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .meta {
+    margin-bottom: 1rem;
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+  .head h1 {
+    font-size: clamp(2.1rem, 4.8vw, 3.5rem);
+  }
+  .head .lead {
+    max-width: 52ch;
+    margin-inline: auto;
+  }
+  .cover {
+    max-width: 1100px;
+    margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .cover img {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--r-lg);
+  }
+  .end {
+    display: flex;
+    justify-content: center;
+    margin-block: 3rem 2rem;
+    color: var(--salmon);
+  }
+  .author {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: var(--r);
+    background: var(--paper-2);
+    font-size: 0.97rem;
+  }
+  .author img {
+    flex: none;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .author p {
+    margin: 0;
+    color: var(--ink-2);
+  }
+  .author strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+</style>

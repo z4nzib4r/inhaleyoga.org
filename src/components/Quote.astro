@@ -1,0 +1,61 @@
+---
+interface Props {
+  quote: string;
+  name: string;
+  topic?: string;
+  size?: 'lg' | 'md';
+}
+const { quote, name, topic, size = 'md' } = Astro.props;
+---
+
+<figure class:list={['quote', `quote--${size}`]}>
+  <blockquote>“{quote}”</blockquote>
+  <figcaption>
+    <span class="quote__name">{name}</span>
+    {topic && <span class="quote__topic">{topic}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .quote {
+    margin: 0;
+  }
+  blockquote {
+    margin: 0 0 1.5rem;
+    font-family: var(--serif);
+    font-weight: 330;
+    font-variation-settings: 'SOFT' 100, 'opsz' 36;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-wrap: pretty;
+  }
+  .quote--lg blockquote {
+    font-size: clamp(1.55rem, 3.2vw, 2.4rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .quote__topic {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--rose);
+  }
+  .quote__topic::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--salmon);
+  }
+</style>

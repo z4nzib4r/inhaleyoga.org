@@ -1,0 +1,257 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import hero from '../assets/images/electro-acupuncture.jpg';
+import ortho from '../assets/images/ortho-acupuncture.jpg';
+import leg from '../assets/images/leg-treatment.jpg';
+import consult from '../assets/images/consultation.jpg';
+
+const electroFor = [
+  "Chronic or stubborn pain that hasn't responded to other treatment",
+  'Nerve-related conditions like neuropathy or nerve compression',
+  'Muscle spasm, tightness and post-injury tension',
+  'Post-stroke recovery and motor function support',
+  'Reducing inflammation and speeding tissue healing',
+];
+const orthoFor = [
+  "Sports and overuse injuries: runner's knee, tennis elbow, shin splints, strains and sprains",
+  'Low back, neck and shoulder pain',
+  'Sciatica and joint pain',
+  'Post-surgical or post-injury rehabilitation',
+  'Tendonitis and chronic tightness that limits range of motion',
+  'Getting back to training or daily activity faster, with less risk of re-injury',
+];
+const whoFor = [
+  'An athlete or active person dealing with an injury, overuse pain or a performance-limiting issue',
+  'Recovering from a stroke, surgery or significant injury',
+  'Living with neuropathy, sciatica or another nerve-related condition',
+  "Managing chronic pain that hasn't fully responded to other treatments",
+  'Looking for a non-pharmaceutical option to reduce reliance on pain medication',
+];
+---
+
+<Base
+  title="Sports & Orthopedic Acupuncture"
+  description="Electro-acupuncture and sports/orthopedic acupuncture in Athens, Ohio for sports injuries, back and neck pain, sciatica, neuropathy and post-surgical rehab."
+>
+  <PageHero
+    label="Electro · sports · orthopedic"
+    title="Targeted relief"
+    accent="for pain, injury & recovery."
+    image={hero}
+    imageAlt="Electro-acupuncture leads attached to needles on the lower back"
+    position="50% 30%"
+  >
+    <p>
+      When standard relaxation-focused acupuncture isn't enough: for nagging injuries, chronic joint or nerve pain,
+      and the long road back from surgery.
+    </p>
+  </PageHero>
+
+  <section class="section bg-2">
+    <div class="wrap-sm">
+      <p class="statement reveal">
+        Michelle combines traditional acupuncture with electro-stimulation and movement-mechanics assessment to treat
+        <em>the root</em> of pain and injury, helping you move, train and function without pain.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap feature">
+      <div class="feature__img arch reveal">
+        <Image src={leg} alt="Michelle treating a patient's lower leg" widths={[420, 700, 1000]} sizes="(min-width: 900px) 38vw, 90vw" />
+      </div>
+      <div>
+        <span class="label reveal">01 · Electro-acupuncture</span>
+        <h2 class="t-2 reveal">A gentle current, <em>a deeper response</em></h2>
+        <p class="reveal">
+          Electro-acupuncture adds a gentle electrical current to select needles once they're placed. This creates a
+          stronger, more sustained stimulation of nerve and muscle tissue than needling alone, which makes it especially effective
+          for:
+        </p>
+        <ul class="dots reveal">{electroFor.map((i) => <li>{i}</li>)}</ul>
+        <p class="note reveal">
+          The current is calibrated to your comfort. Most patients describe a mild, rhythmic tapping or pulsing, not a
+          shock.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-peach">
+    <div class="wrap feature feature--flip">
+      <div class="feature__img arch reveal">
+        <Image src={ortho} alt="Orthopedic acupuncture treatment on the leg" widths={[420, 700, 1000]} sizes="(min-width: 900px) 38vw, 90vw" />
+      </div>
+      <div>
+        <span class="label reveal">02 · Sports &amp; orthopedic</span>
+        <h2 class="t-2 reveal">Acupuncture through the lens of <em>how you move</em></h2>
+        <p class="reveal">
+          Rather than treating pain generally, Michelle assesses <em>how</em> you move, identifying the specific
+          muscles, motor points (where a nerve enters a muscle) and movement patterns contributing to your pain.
+        </p>
+        <ul class="dots reveal">{orthoFor.map((i) => <li>{i}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap who">
+      <header>
+        <span class="label reveal">Who is this for?</span>
+        <h2 class="t-1 reveal">A strong fit <em>if you're…</em></h2>
+      </header>
+      <ol class="who__list">
+        {whoFor.map((w, i) => <li class="reveal" style={`--d:${i * 0.05}s`}>{w}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section bg-2">
+    <div class="wrap feature">
+      <div class="feature__img arch reveal">
+        <Image src={consult} alt="Michelle in consultation with a patient" widths={[420, 700, 1000]} sizes="(min-width: 900px) 38vw, 90vw" />
+      </div>
+      <div>
+        <span class="label reveal">What to expect</span>
+        <h2 class="t-2 reveal">A plan built <em>for your body</em></h2>
+        <p class="reveal">
+          Your first visit includes a thorough intake: health history, your pain or injury timeline, and a
+          movement/functional assessment where relevant. From there, Michelle builds a plan that may combine traditional
+          needling, electro-stimulation, cupping or other techniques.
+        </p>
+        <div class="price reveal">
+          <span class="price__label">Orthopedic Acupuncture · 1 hr 30 min</span>
+          <div class="price__rows">
+            <div><strong>$185</strong><span>Initial visit</span></div>
+            <div><strong>$165</strong><span>Follow-up visits</span></div>
+          </div>
+        </div>
+        <p class="note reveal">
+          Electro-acupuncture may also be incorporated into standard sessions when appropriate. Ask Michelle if it's
+          right for your plan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Ready to get back to" accent="feeling like yourself?" />
+</Base>
+
+<style>
+  .statement {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+    font-weight: 320;
+    font-variation-settings: 'SOFT' 100, 'opsz' 72;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .statement em {
+    color: var(--rose);
+  }
+  .feature {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 6rem;
+    }
+    .feature--flip {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+    .feature--flip .feature__img {
+      order: 2;
+    }
+  }
+  .feature__img {
+    width: min(100%, 440px);
+    aspect-ratio: 4 / 5;
+    justify-self: center;
+  }
+  .note {
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--salmon);
+    font-size: 0.97rem;
+    color: var(--ink-2);
+  }
+  .who {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .who {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 6rem;
+    }
+  }
+  .who__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: who;
+    border-top: 1px solid var(--line-2);
+  }
+  .who__list li {
+    counter-increment: who;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding-block: 1.3rem;
+    border-bottom: 1px solid var(--line-2);
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+    font-weight: 340;
+    font-variation-settings: 'SOFT' 100;
+    line-height: 1.35;
+  }
+  .who__list li::before {
+    content: counter(who, decimal-leading-zero);
+    padding-top: 0.15rem;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--salmon);
+  }
+  .price {
+    margin: 1.75rem 0;
+    padding: 1.5rem 1.75rem;
+    border-radius: var(--r);
+    background: var(--paper);
+    border: 1px solid var(--line-2);
+  }
+  .price__label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+  .price__rows {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 3rem;
+  }
+  .price__rows div {
+    display: grid;
+  }
+  .price__rows strong {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 320;
+    font-variation-settings: 'SOFT' 100, 'opsz' 72;
+    line-height: 1;
+  }
+  .price__rows span {
+    color: var(--ink-2);
+    font-size: 0.92rem;
+  }
+</style>

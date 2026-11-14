@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Quote from '../components/Quote.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { testimonials } from '../data/content';
+---
+
+<Base title="Reviews" description="What patients say about acupuncture with Michelle Stobart, L.Ac. at Inhale Wellness Studio in Athens, Ohio.">
+  <PageHero label="Kind words" title="What people say" accent="about Inhale.">
+    <p>Over 2,500 patient visits and 100+ five-star Google reviews. Here are a few of their stories.</p>
+  </PageHero>
+
+  <section class="section-sm">
+    <div class="wrap-sm reviews">
+      {
+        testimonials.map((t, i) => (
+          <article class="review reveal">
+            <span class="review__n">{String(i + 1).padStart(2, '0')}</span>
+            <Quote {...t} size="lg" />
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .section-sm {
+    padding-bottom: var(--section);
+  }
+  .reviews {
+    border-top: 1px solid var(--line-2);
+  }
+  .review {
+    display: grid;
+    gap: 1rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid var(--line-2);
+  }
+  @media (min-width: 720px) {
+    .review {
+      grid-template-columns: 4rem 1fr;
+    }
+  }
+  .review__n {
+    padding-top: 0.6rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--salmon);
+  }
+</style>

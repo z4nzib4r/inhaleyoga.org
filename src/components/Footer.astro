@@ -1,0 +1,185 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Lotus from './Lotus.astro';
+import { nav, site, modalities } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <p class="footer__big">Breathe in. <em>We'll take it from here.</em></p>
+      <a class="btn btn--light" href={site.phoneHref}><Icon name="phone" size={16} /> {site.phone}</a>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <Logo variant="light" />
+        <div class="footer__social">
+          <a href={site.social.facebook} aria-label="Facebook" rel="noopener" target="_blank"><Icon name="facebook" size={18} /></a>
+          <a href={site.social.instagram} aria-label="Instagram" rel="noopener" target="_blank"><Icon name="instagram" size={18} /></a>
+          <a href={site.social.youtube} aria-label="YouTube" rel="noopener" target="_blank"><Icon name="youtube" size={18} /></a>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="footer__title">Studio</h2>
+        <address>
+          <a href={site.location.mapsUrl} target="_blank" rel="noopener">
+            {site.location.line1}<br />{site.location.city}
+          </a>
+        </address>
+        <p class="footer__dim">Inside Athens Wellness Coop, behind the red door.<br />By appointment only.</p>
+      </div>
+
+      <div>
+        <h2 class="footer__title">Contact</h2>
+        <ul class="footer__list">
+          <li><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        </ul>
+        <h2 class="footer__title">Explore</h2>
+        <ul class="footer__list footer__list--2">
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer__title">Offering</h2>
+        <ul class="footer__list">
+          {modalities.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__base">
+      <Lotus size={20} />
+      <p>© {year} {site.name} · Athens, Ohio</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-top: clamp(4rem, 8vw, 6rem);
+    background: var(--teal-3);
+    color: rgb(255 255 255 / 0.74);
+    font-size: 0.96rem;
+    --icon-cut: var(--teal-3);
+  }
+  .footer a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .footer a:hover {
+    color: var(--peach-2);
+  }
+  .footer__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .footer__big {
+    margin: 0;
+    max-width: 16ch;
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.75rem);
+    font-weight: 320;
+    font-variation-settings: 'SOFT' 100, 'opsz' 72;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--paper);
+  }
+  .footer__big em {
+    color: var(--peach-2);
+  }
+  .footer .btn--light:hover {
+    color: var(--ink);
+  }
+  .footer__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 720px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer__grid {
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    }
+  }
+  .footer__social {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.75rem;
+  }
+  .footer__social a {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 50%;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .footer__social a:hover {
+    border-color: var(--peach-2);
+    background: rgb(255 255 255 / 0.06);
+  }
+  .footer__title {
+    margin: 0 0 0.9rem;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--salmon);
+  }
+  .footer__title:not(:first-child) {
+    margin-top: 1.9rem;
+  }
+  address {
+    font-style: normal;
+    margin-bottom: 0.9rem;
+  }
+  .footer__dim {
+    color: rgb(255 255 255 / 0.48);
+    font-size: 0.9rem;
+  }
+  .footer__list {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .footer__list--2 {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 1.75rem;
+  }
+  .footer__base {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-block: 1.75rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    color: rgb(255 255 255 / 0.45);
+    font-size: 0.82rem;
+  }
+  .footer__base :global(svg) {
+    color: var(--salmon);
+  }
+  .footer__base p {
+    margin: 0;
+  }
+</style>

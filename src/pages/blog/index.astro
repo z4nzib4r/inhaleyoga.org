@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+
+const posts = (await getCollection('blog')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const [featured, ...rest] = posts;
+---
+
+<Base title="Blog" description="Notes on acupuncture, pain, recovery and wellness from Inhale Wellness Studio in Athens, Ohio.">
+  <PageHero label="The journal" title="Notes from" accent="the treatment room." />
+
+  <section class="blog">
+    <div class="wrap">
+      {
+        featured && (
+          <a class="featured reveal" href={`/blog/${featured.id}`}>
+            <div class="featured__img">
+              <Image src={featured.data.cover} alt={featured.data.coverAlt} widths={[600, 900, 1300]} sizes="(min-width: 900px) 55vw, 100vw" loading="eager" />
+            </div>
+            <div class="featured__body">
+              <span class="meta">{featured.data.category} · {fmt(featured.data.date)}</span>
+              <h2 class="t-2">{featured.data.title}</h2>
+              <p>{featured.data.description}</p>
+              <span class="more-link">Read article</span>
+            </div>
+          </a>
+        )
+      }
+
+      <ul class="posts">
+        {
+          rest.map((p) => (
+            <li class="reveal">
+              <a class="post" href={`/blog/${p.id}`}>
+                <div class="post__img">
+                  <Image src={p.data.cover} alt={p.data.coverAlt} widths={[400, 700, 900]} sizes="(min-width: 760px) 50vw, 100vw" />
+                </div>
+                <span class="meta">{p.data.category} · {fmt(p.data.date)}</span>
+                <h2 class="t-3">{p.data.title}</h2>
+                <p>{p.data.description}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog {
+    padding-bottom: var(--section);
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .meta {
+    display: block;
+    margin-bottom: 0.9rem;
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose);
+  }
+  .featured {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding: clamp(1rem, 2vw, 1.25rem);
+    border-radius: var(--r-lg);
+    background: var(--paper-2);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  @media (min-width: 900px) {
+    .featured {
+      grid-template-columns: 1.15fr 1fr;
+      gap: 4rem;
+    }
+  }
+  .featured__body {
+    padding: 0.5rem 1rem 1.5rem;
+  }
+  .featured__img,
+  .post__img {
+    overflow: hidden;
+    border-radius: var(--r);
+  }
+  .featured__img {
+    aspect-ratio: 3 / 2;
+  }
+  .post__img {
+    aspect-ratio: 16 / 10;
+    margin-bottom: 1.5rem;
+  }
+  .featured img,
+  .post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 0.9s var(--ease);
+  }
+  .featured:hover img,
+  .post:hover img {
+    scale: 1.04;
+  }
+  .featured p,
+  .post p {
+    color: var(--ink-2);
+  }
+  .posts {
+    display: grid;
+    gap: 3.5rem 2.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 760px) {
+    .posts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .post h2 {
+    font-family: var(--serif);
+    transition: color 0.25s;
+  }
+  .post:hover h2,
+  .featured:hover h2 {
+    color: var(--rose);
+  }
+</style>

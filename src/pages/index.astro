@@ -1,0 +1,834 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Mandala from '../components/Mandala.astro';
+import Lotus from '../components/Lotus.astro';
+import Icon from '../components/Icon.astro';
+import Faq from '../components/Faq.astro';
+import Quote from '../components/Quote.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, modalities } from '../data/site';
+import { conditions, testimonials } from '../data/content';
+
+import facial from '../assets/images/facial-acupuncture.jpg';
+import electro from '../assets/images/electro-acupuncture.jpg';
+import consult from '../assets/images/consultation.jpg';
+import ortho from '../assets/images/ortho-acupuncture.jpg';
+import cupping from '../assets/images/cupping.jpg';
+import thai from '../assets/images/thai-massage.jpg';
+import reflexology from '../assets/images/reflexology.jpg';
+import coaching from '../assets/team/angela-coaching.jpg';
+import hands from '../assets/images/hero-needles.jpg';
+import michelle from '../assets/team/michelle.jpg';
+import angela from '../assets/team/angela.jpg';
+
+const menu = [
+  { name: 'Acupuncture', note: 'Initial visit, basic, plus & premium', price: '$115–165', image: consult, href: '/services#acupuncture' },
+  { name: 'Sports & Orthopedic Acupuncture', note: 'Electro & motor-point for pain and injury', price: '$165–185', image: ortho, href: '/sports-orthopedic-acupuncture' },
+  { name: 'Thai Bliss Massage', note: 'Relaxation & aromatherapy, with optional cupping', price: '$95–125', image: thai, href: '/services#massage' },
+  { name: 'Cupping Therapy', note: 'Five-session packages for one or two areas', price: '$270–425', image: cupping, href: '/services#massage' },
+  { name: 'Reflexology', note: 'The ultimate foot & hand treatment, with Angela', price: '$95–125', image: reflexology, href: '/services#reflexology' },
+  { name: 'Wellness Coaching', note: 'Sustainable habits that fit real life', price: '$85–105', image: coaching, href: '/services#coaching' },
+];
+
+const stats = [
+  { n: '2004', l: 'Inhale first opened its doors in Athens' },
+  { n: '2,500+', l: 'Acupuncture patient visits' },
+  { n: '100+', l: 'Five-star Google reviews' },
+  { n: '6–10', l: 'Visits in a typical course of care' },
+];
+---
+
+<Base>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <span class="label reveal">Acupuncture &amp; wellness · Athens, Ohio</span>
+        <h1 class="t-display reveal" style="--d:.05s">Targeted relief <em>for pain, injury &amp; recovery.</em></h1>
+        <p class="lead reveal" style="--d:.1s">
+          Acupuncture, electro-acupuncture, cupping, reflexology and wellness coaching, for getting you back to life
+          with less pain, less anxiety and better health.
+        </p>
+        <div class="btn-row reveal" style="--d:.15s">
+          <a class="btn" href="/contact">Book a free phone consult</a>
+          <a class="btn btn--line" href="/services">Services &amp; pricing</a>
+        </div>
+        <a class="hero__byline reveal" style="--d:.2s" href="/about">
+          <Image src={michelle} alt="" width={96} height={96} />
+          <span><strong>Michelle Stobart, L.Ac.</strong><br />Board-certified, licensed acupuncturist</span>
+        </a>
+      </div>
+
+      <div class="hero__art">
+        <Mandala class="hero__mandala" size={680} eager />
+        <div class="hero__photo arch">
+          <Image
+            src={facial}
+            alt="Fine acupuncture needles being placed along a patient's forehead"
+            widths={[420, 700, 1000]}
+            sizes="(min-width: 960px) 30vw, 70vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+        <div class="hero__chip">
+          <div class="hero__chip-img">
+            <Image src={electro} alt="" widths={[160, 240]} sizes="80px" loading="eager" />
+          </div>
+          <span>Specializing in<br /><em>electro-acupuncture</em></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-label="What we offer">
+    <div class="ticker__track">
+      {
+        [0, 1].map((dup) => (
+          <ul aria-hidden={dup === 1 ? 'true' : undefined}>
+            {[...modalities, 'By appointment only'].map((m) => (
+              <li>
+                <span>{m}</span>
+                <Lotus size={20} />
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ============ INTRO ============ -->
+  <section class="section">
+    <div class="wrap">
+      <p class="statement reveal">
+        Every visit begins with a conversation about your pain, your history, your daily life and your goals,
+        so we can treat <em>all of you,</em> not just the part that hurts.
+      </p>
+      <dl class="stats">
+        {
+          stats.map((s, i) => (
+            <div class="reveal" style={`--d:${i * 0.08}s`}>
+              <dt>{s.n}</dt>
+              <dd>{s.l}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ CONDITIONS ============ -->
+  <section class="section bg-2">
+    <div class="wrap cond">
+      <div class="cond__aside">
+        <span class="label reveal">What we help with</span>
+        <h2 class="t-1 reveal">Conditions <em>we treat</em></h2>
+        <p class="muted reveal">
+          From stubborn sports injuries to the complicated cases others couldn't help. And if acupuncture isn't the
+          right fit, we'll help you find someone who is.
+        </p>
+        <div class="cond__img arch reveal">
+          <Image src={hands} alt="Acupuncture needles placed along a patient's back" widths={[400, 700]} sizes="(min-width: 960px) 26vw, 80vw" />
+        </div>
+      </div>
+      <ol class="cond__list">
+        {
+          conditions.map((c, i) => (
+            <li class="reveal">
+              <span class="cond__n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="t-3">{c.title}</h3>
+                <p>{c.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ MENU ============ -->
+  <section class="section">
+    <div class="wrap">
+      <header class="menu-head">
+        <div>
+          <span class="label reveal">Services &amp; pricing</span>
+          <h2 class="t-1 reveal">A menu <em>of care</em></h2>
+        </div>
+        <p class="muted reveal">
+          Clinical precision for stubborn pain, and slow, restorative sessions for a nervous system that needs a
+          breather. HSA &amp; FSA cards welcome.
+        </p>
+      </header>
+
+      <ul class="menu">
+        {
+          menu.map((m, i) => (
+            <li class="reveal" style={`--d:${i * 0.04}s`}>
+              <a href={m.href}>
+                <span class="menu__img">
+                  <Image src={m.image} alt="" widths={[160, 240]} sizes="80px" />
+                </span>
+                <span class="menu__name">
+                  <span class="t-3">{m.name}</span>
+                  <span class="menu__note">{m.note}</span>
+                </span>
+                <span class="menu__price">{m.price}</span>
+                <span class="menu__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="menu-foot reveal">
+        <a class="more-link" href="/services">Full service list</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPORTS ============ -->
+  <section class="sports">
+    <div class="wrap sports__grid">
+      <div class="sports__img reveal">
+        <div class="arch">
+          <Image src={electro} alt="Electro-acupuncture leads connected to needles on the lower back" widths={[420, 700, 1000]} sizes="(min-width: 900px) 38vw, 90vw" />
+        </div>
+      </div>
+      <div class="sports__text">
+        <span class="label reveal">Electro · sports · orthopedic</span>
+        <h2 class="t-1 reveal">When relaxation-focused acupuncture <em>isn't enough.</em></h2>
+        <p class="reveal">
+          Nagging sports injury, chronic joint or nerve pain, or working your way back from surgery? Michelle combines
+          traditional needling with electro-stimulation and movement-mechanics assessment to treat the root of pain,
+          not just the symptoms.
+        </p>
+        <ul class="dots reveal">
+          <li>Back, neck, shoulder &amp; sciatic pain</li>
+          <li>Neuropathy &amp; post-stroke recovery</li>
+          <li>Tendonitis, strains &amp; overuse injuries</li>
+          <li>Post-surgical &amp; post-injury rehab</li>
+        </ul>
+        <a class="btn btn--light reveal" href="/sports-orthopedic-acupuncture">How it works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="section reviews">
+    <div class="wrap-sm center">
+      <span class="label reveal">Kind words</span>
+      <div class="slider reveal" data-slider>
+        <div class="slider__track" data-track>
+          {
+            testimonials.map((t, i) => (
+              <div class="slider__slide" id={`review-${i}`}>
+                <Quote {...t} size="lg" />
+              </div>
+            ))
+          }
+        </div>
+        <div class="slider__nav">
+          {
+            testimonials.map((t, i) => (
+              <button type="button" data-go={i} aria-label={`Show review from ${t.name}`} aria-current={i === 0 ? 'true' : undefined} />
+            ))
+          }
+        </div>
+      </div>
+      <a class="more-link reveal" href="/reviews">More reviews</a>
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section class="section bg-peach team">
+    <div class="wrap">
+      <header class="team__head">
+        <span class="label reveal">Meet our team</span>
+        <h2 class="t-1 reveal">Experienced hands, <em>curious minds</em></h2>
+      </header>
+      <div class="team__grid">
+        <a class="person reveal" href="/about">
+          <div class="arch"><Image src={michelle} alt="Michelle Stobart, L.Ac." widths={[360, 600]} sizes="(min-width: 760px) 30vw, 80vw" /></div>
+          <h3 class="t-3">Michelle Stobart, <em>L.Ac.</em></h3>
+          <p>Licensed acupuncturist and certified yoga therapist with over 20 years of teaching and healing in Athens.</p>
+        </a>
+        <a class="person reveal" style="--d:.1s" href="/about">
+          <div class="arch"><Image src={angela} alt="Angela Jett" widths={[360, 600]} sizes="(min-width: 760px) 30vw, 80vw" /></div>
+          <h3 class="t-3">Angela <em>Jett</em></h3>
+          <p>Certified reflexologist and wellness coach, blending reflexology with Traditional Chinese Medicine.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section">
+    <div class="wrap faq-grid">
+      <header>
+        <span class="label reveal">Good questions</span>
+        <h2 class="t-1 reveal">Frequently <em>asked</em></h2>
+        <p class="muted reveal">Still wondering if acupuncture is right for you? Call and we'll talk it through. No pressure, no upsell.</p>
+        <a class="more-link reveal" href={site.phoneHref}><Icon name="phone" size={14} /> {site.phone}</a>
+      </header>
+      <div class="reveal"><Faq /></div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-slider]').forEach((slider) => {
+    const track = slider.querySelector<HTMLElement>('[data-track]')!;
+    const dots = [...slider.querySelectorAll<HTMLButtonElement>('[data-go]')];
+    const go = (i: number) => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.go))));
+    track.addEventListener(
+      'scroll',
+      () => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach((d, j) => (j === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      },
+      { passive: true },
+    );
+  });
+</script>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3.5rem, 7vw, 6rem);
+    overflow: hidden;
+  }
+  .hero__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .hero__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 5vw, 5rem);
+      min-height: min(calc(100svh - var(--header-h) - 8rem), 680px);
+    }
+  }
+  .hero h1 {
+    margin-bottom: 1.75rem;
+  }
+  .hero h1 em {
+    display: block;
+  }
+  .hero .lead {
+    max-width: 40ch;
+    margin-bottom: 2.25rem;
+  }
+  .hero__byline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 2.5rem;
+    color: var(--ink-2);
+    font-size: 0.88rem;
+    line-height: 1.4;
+    text-decoration: none;
+  }
+  .hero__byline strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .hero__byline img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--peach-2);
+  }
+
+  .hero__art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 420px;
+  }
+  .hero__art :global(.hero__mandala) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(640px, 118%);
+    translate: -50% -50%;
+  }
+  .hero__photo {
+    position: relative;
+    width: min(74%, 400px);
+    aspect-ratio: 3 / 4.2;
+    box-shadow: 0 40px 80px -50px rgb(44 41 39 / 0.55);
+  }
+  .hero__photo img {
+    object-position: 50% 30%;
+  }
+  .hero__chip {
+    position: absolute;
+    left: 0;
+    bottom: 8%;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.5rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 16px 40px -24px rgb(44 41 39 / 0.5);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    color: var(--ink-2);
+    animation: float 7s ease-in-out infinite;
+  }
+  .hero__chip em {
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+  .hero__chip-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: none;
+  }
+  .hero__chip-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes float {
+    50% {
+      translate: 0 -8px;
+    }
+  }
+  @media (max-width: 959px) {
+    .hero__art {
+      min-height: 0;
+      padding-block: 1rem;
+    }
+    .hero__chip {
+      left: 2%;
+    }
+  }
+
+  /* ---------- Ticker ---------- */
+  .ticker {
+    overflow: hidden;
+    padding-block: 1.25rem;
+    background: var(--peach-2);
+    color: var(--ink);
+  }
+  .ticker__track {
+    display: flex;
+    width: max-content;
+    animation: ticker 50s linear infinite;
+  }
+  .ticker ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ticker li {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    padding-right: 2.25rem;
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-weight: 330;
+    font-variation-settings: 'SOFT' 100;
+    white-space: nowrap;
+  }
+  .ticker li:nth-child(even) span {
+    font-style: italic;
+  }
+  .ticker li :global(svg) {
+    color: var(--rose);
+  }
+  @keyframes ticker {
+    to {
+      translate: -50% 0;
+    }
+  }
+
+  /* ---------- Intro ---------- */
+  .statement {
+    max-width: 30ch;
+    margin: 0 0 clamp(3rem, 6vw, 5rem);
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.8vw, 3.1rem);
+    font-weight: 320;
+    font-variation-settings: 'SOFT' 100, 'opsz' 72;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+  .statement em {
+    color: var(--rose);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+    margin: 0;
+  }
+  @media (min-width: 860px) {
+    .stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .stats div {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-2);
+  }
+  .stats dt {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+    font-weight: 300;
+    font-variation-settings: 'SOFT' 100, 'opsz' 72;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--rose);
+  }
+  .stats dd {
+    margin: 0.6rem 0 0;
+    max-width: 22ch;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+  }
+
+  /* ---------- Conditions ---------- */
+  .cond {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 960px) {
+    .cond {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .cond__aside {
+      position: sticky;
+      top: calc(var(--header-h) + 2.5rem);
+    }
+  }
+  .cond__img {
+    width: min(100%, 340px);
+    aspect-ratio: 4 / 5;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 959px) {
+    .cond__img {
+      display: none;
+    }
+  }
+  .cond__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-2);
+  }
+  .cond__list li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line-2);
+  }
+  .cond__n {
+    padding-top: 0.3rem;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--salmon);
+  }
+  .cond__list h3 {
+    margin-bottom: 0.35rem;
+  }
+  .cond__list p {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  /* ---------- Menu ---------- */
+  .menu-head {
+    display: grid;
+    gap: 1rem 4rem;
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  @media (min-width: 900px) {
+    .menu-head {
+      grid-template-columns: 1fr 1fr;
+    }
+    .menu-head p {
+      max-width: 44ch;
+      justify-self: end;
+    }
+  }
+  .menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-2);
+  }
+  .menu li {
+    border-bottom: 1px solid var(--line-2);
+  }
+  .menu a {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: 1.25rem clamp(0.5rem, 2vw, 1.5rem);
+    border-radius: var(--r);
+    color: inherit;
+    text-decoration: none;
+    transition: background 0.4s var(--ease);
+  }
+  .menu a:hover {
+    background: var(--peach-1);
+  }
+  .menu__img {
+    width: clamp(56px, 7vw, 76px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: scale 0.5s var(--ease);
+  }
+  .menu a:hover .menu__img {
+    scale: 1.06;
+  }
+  .menu__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .menu__name {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .menu__name .t-3 {
+    font-family: var(--serif);
+    font-weight: 360;
+    font-variation-settings: 'SOFT' 100;
+    line-height: 1.2;
+  }
+  .menu__note {
+    color: var(--ink-2);
+    font-size: 0.93rem;
+  }
+  .menu__price {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-variation-settings: 'SOFT' 100;
+    white-space: nowrap;
+  }
+  .menu__go {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line-2);
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .menu a:hover .menu__go {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--white);
+  }
+  @media (max-width: 640px) {
+    .menu a {
+      grid-template-columns: auto 1fr;
+      row-gap: 0.25rem;
+      padding-inline: 0;
+    }
+    .menu__price {
+      grid-column: 2;
+      font-size: 1.1rem;
+      color: var(--rose);
+    }
+    .menu__go {
+      display: none;
+    }
+  }
+  .menu-foot {
+    margin-top: 2rem;
+  }
+
+  /* ---------- Sports ---------- */
+  .sports {
+    padding-block: var(--section);
+    background: var(--teal-3);
+    color: rgb(255 255 255 / 0.8);
+    overflow: hidden;
+  }
+  .sports__grid {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .sports__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 6rem;
+    }
+  }
+  .sports__img {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 460px);
+  }
+  .sports__img::before {
+    content: '';
+    position: absolute;
+    inset: -1.25rem;
+    border: 1px solid rgb(244 208 193 / 0.3);
+    border-radius: 999px 999px var(--r-lg) var(--r-lg);
+  }
+  .sports__img .arch {
+    aspect-ratio: 3 / 4;
+  }
+  .sports h2 {
+    color: var(--paper);
+  }
+  .sports h2 em {
+    color: var(--peach-2);
+  }
+  .sports .label {
+    color: var(--salmon);
+  }
+  .sports :global(.dots li::before) {
+    box-shadow: 0 0 0 4px rgb(229 160 138 / 0.18);
+  }
+
+  /* ---------- Reviews ---------- */
+  .slider {
+    margin-bottom: 2rem;
+  }
+  .slider__track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .slider__track::-webkit-scrollbar {
+    display: none;
+  }
+  .slider__slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    padding-inline: 0.25rem;
+  }
+  .slider__slide :global(figcaption) {
+    justify-content: center;
+  }
+  .slider__nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .slider__nav button {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    position: relative;
+  }
+  .slider__nav button::before {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--rose);
+    translate: -50% -50%;
+    transition: background 0.3s, scale 0.3s;
+  }
+  .slider__nav button[aria-current='true']::before {
+    background: var(--rose);
+    scale: 1.25;
+  }
+
+  /* ---------- Team ---------- */
+  .team__head {
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .team__head .label::after {
+    content: '';
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .team__grid {
+    display: grid;
+    gap: 3rem 2rem;
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  @media (min-width: 700px) {
+    .team__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .team__grid .person:nth-child(2) {
+      margin-top: 4rem;
+    }
+  }
+  .person {
+    color: inherit;
+    text-decoration: none;
+    text-align: center;
+  }
+  .person .arch {
+    aspect-ratio: 4 / 5;
+    margin-bottom: 1.5rem;
+  }
+  .person .arch img {
+    transition: scale 0.8s var(--ease);
+  }
+  .person:hover .arch img {
+    scale: 1.04;
+  }
+  .person h3 {
+    margin-bottom: 0.4rem;
+  }
+  .person p {
+    max-width: 34ch;
+    margin-inline: auto;
+    color: var(--ink-2);
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 960px) {
+    .faq-grid {
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .faq-grid header {
+      position: sticky;
+      top: calc(var(--header-h) + 2.5rem);
+    }
+  }
+  .faq-grid header .more-link {
+    margin-top: 0.5rem;
+  }
+</style>
